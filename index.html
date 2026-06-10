@@ -5,18 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Undangan Pernikahan Ega & Nia</title>
   
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- FontAwesome Icons for Beautiful UI -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Chart.js for Beautiful Analytics & Stats -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
@@ -59,6 +55,16 @@
   </script>
   
   <style>
+    /* Welcome screen wrapper styling */
+    #welcome-screen {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 999999 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      pointer-events: auto !important;
+    }
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
       width: 4px;
@@ -90,18 +96,15 @@
 </head>
 <body class="bg-slate-900 text-slate-800 font-sans antialiased min-h-screen flex justify-center overflow-x-hidden relative">
 
-  <!-- Toast Notification Container -->
-  <div id="toast-container" class="fixed top-5 left-1/2 -translate-x-1/2 z-[10005] flex flex-col gap-2 w-11/12 max-w-sm pointer-events-none"></div>
+  <div id="toast-container" class="fixed top-5 left-1/2 -translate-x-1/2 z-[100005] flex flex-col gap-2 w-11/12 max-w-sm pointer-events-none"></div>
 
-  <!-- OVERLAY / WELCOME SCREEN (Direct child of body with absolute highest z-index) -->
-  <section id="welcome-screen" class="fixed inset-0 z-[9999] bg-gradient-to-b from-sage-900 via-sage-800 to-sage-950 text-white flex flex-col justify-between p-8 pointer-events-auto">
+  <section id="welcome-screen" class="bg-gradient-to-b from-sage-900 via-sage-800 to-sage-950 text-white p-8">
     <div class="text-center pt-12">
       <span class="text-xs tracking-[0.3em] text-champagne-300 uppercase block mb-3 font-semibold">The Wedding of</span>
       <h1 class="font-serif text-4xl md:text-5xl text-champagne-200 leading-tight">Ega & Nia</h1>
       <p class="text-xs text-sage-200 tracking-wider mt-2">20 Juni 2026</p>
     </div>
 
-    <!-- Artistic Frame / Floral Mockup -->
     <div class="my-auto flex justify-center items-center py-6">
       <div class="relative w-56 h-56 rounded-full border border-champagne-300/30 flex items-center justify-center p-3 animate-pulse-slow">
         <div class="w-full h-full rounded-full border-2 border-dashed border-champagne-400/50 flex flex-col justify-center items-center bg-sage-800/40 backdrop-blur-sm">
@@ -115,18 +118,16 @@
 
     <div class="text-center pb-12">
       <p class="text-xs text-sage-300 mb-6 max-w-xs mx-auto">Merupakan suatu kehormatan dan kebahagiaan bagi kami sekeluarga apabila Bapak/Ibu/Saudara/i berkenan hadir di hari bahagia kami.</p>
-      <button id="btn-open-undangan" class="cursor-pointer px-8 py-3.5 rounded-full bg-champagne-400 hover:bg-champagne-500 text-sage-950 font-bold tracking-wider text-sm transition-all shadow-lg shadow-champagne-950/20 active:scale-95 flex items-center gap-3 mx-auto">
+      <button onclick="openUndangan()" class="relative z-[1000000] px-8 py-3.5 rounded-full bg-champagne-400 hover:bg-champagne-500 text-sage-950 font-bold tracking-wider text-sm transition-all shadow-lg shadow-champagne-950/20 active:scale-95 flex items-center gap-3 mx-auto cursor-pointer">
         <i class="fa-solid fa-envelope-open"></i> Buka Undangan
       </button>
     </div>
   </section>
 
-  <!-- Main Mobile Container (Enforces Mobile Viewport Look on Desktop) -->
   <main class="w-full max-w-md bg-champagne-50 shadow-2xl relative min-h-screen pb-24 overflow-x-hidden flex flex-col">
 
-    <!-- Music Background Player (Hidden/Floating Control) -->
     <div id="music-widget" class="fixed bottom-24 right-5 z-40 hidden">
-      <button id="btn-music" class="w-12 h-12 rounded-full bg-sage-600 text-white shadow-lg flex items-center justify-center hover:bg-sage-700 transition-transform active:scale-95 duration-200">
+      <button onclick="toggleMusic()" id="btn-music" class="w-12 h-12 rounded-full bg-sage-600 text-white shadow-lg flex items-center justify-center hover:bg-sage-700 transition-transform active:scale-95 duration-200">
         <i id="music-icon" class="fa-solid fa-compact-disc fa-spin"></i>
       </button>
       <audio id="bg-audio" loop>
@@ -135,17 +136,14 @@
       </audio>
     </div>
 
-    <!-- CONTENT WRAPPER -->
     <div id="main-content" class="opacity-0 transition-opacity duration-1000 flex-grow">
       
-      <!-- HERO SECTION -->
-      <header class="relative bg-gradient-to-b from-sage-900 to-sage-800 text-white py-16 px-6 text-center shadow-lg">
+      <header class="relative bg-gradient-to-b from-sage-900 to-groom-800 text-white py-16 px-6 text-center shadow-lg">
         <div class="absolute inset-0 bg-[radial-gradient(#567c69_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
         <span class="text-xs tracking-[0.2em] text-champagne-400 uppercase block mb-3 font-semibold">Walimatul 'Ursy</span>
         <h2 class="font-serif text-5xl text-champagne-100 mb-2">Ega & Nia</h2>
         <p class="text-sm text-sage-300 tracking-widest uppercase mb-6">Sabtu, 20 Juni 2026</p>
         
-        <!-- Countdown Widget -->
         <div class="grid grid-cols-4 gap-2 max-w-xs mx-auto mt-6">
           <div class="bg-sage-950/50 backdrop-blur-md rounded-xl p-3 border border-sage-700/50">
             <span id="days" class="block font-serif text-2xl text-champagne-300 font-bold">00</span>
@@ -166,10 +164,8 @@
         </div>
       </header>
 
-      <!-- TAB SECTIONS CONTAINER -->
       <div class="px-5 py-8 space-y-12">
         
-        <!-- TAB 1: MEMPELAI (SAMPUL & PROFIL) -->
         <section id="tab-mempelai" class="tab-content scroll-mt-20">
           <div class="text-center mb-8">
             <i class="fa-solid fa-leaf text-sage-500 text-2xl mb-2"></i>
@@ -178,7 +174,6 @@
           </div>
 
           <div class="space-y-6">
-            <!-- Mempelai Pria -->
             <div class="bg-white rounded-3xl p-6 shadow-md border border-sage-100/50 relative overflow-hidden">
               <div class="absolute -right-8 -top-8 w-24 h-24 bg-sage-100 rounded-full opacity-50"></div>
               <div class="flex items-center gap-4 mb-4">
@@ -199,14 +194,12 @@
               </div>
             </div>
 
-            <!-- Heart Divider -->
             <div class="flex items-center justify-center my-2">
               <div class="h-[1px] bg-sage-200 flex-grow max-w-[60px]"></div>
               <i class="fa-solid fa-heart text-champagne-400 mx-3 text-lg"></i>
               <div class="h-[1px] bg-sage-200 flex-grow max-w-[60px]"></div>
             </div>
 
-            <!-- Mempelai Wanita -->
             <div class="bg-white rounded-3xl p-6 shadow-md border border-sage-100/50 relative overflow-hidden">
               <div class="absolute -left-8 -top-8 w-24 h-24 bg-champagne-100 rounded-full opacity-50"></div>
               <div class="flex items-center gap-4 mb-4">
@@ -229,7 +222,6 @@
           </div>
         </section>
 
-        <!-- TAB 2: ACARA (WAKTU & TEMPAT) -->
         <section id="tab-acara" class="tab-content scroll-mt-20">
           <div class="text-center mb-8">
             <i class="fa-solid fa-calendar-days text-sage-500 text-2xl mb-2"></i>
@@ -238,7 +230,6 @@
           </div>
 
           <div class="space-y-6">
-            <!-- Akad Nikah -->
             <div class="bg-white rounded-3xl p-6 shadow-md border-t-4 border-sage-500">
               <div class="flex justify-between items-start mb-4">
                 <span class="px-3 py-1 bg-sage-100 text-sage-700 text-[10px] rounded-full font-bold uppercase tracking-wider">Akad Nikah</span>
@@ -276,7 +267,6 @@
               </div>
             </div>
 
-            <!-- Resepsi Nikah -->
             <div class="bg-white rounded-3xl p-6 shadow-md border-t-4 border-champagne-400">
               <div class="flex justify-between items-start mb-4">
                 <span class="px-3 py-1 bg-champagne-100 text-champagne-800 text-[10px] rounded-full font-bold uppercase tracking-wider">Resepsi Pernikahan</span>
@@ -312,14 +302,13 @@
                   </div>
                 </div>
               </div>
-              <button onclick="openMaps()" class="w-full mt-4 py-2.5 rounded-2xl bg-sage-600 hover:bg-sage-700 text-white font-medium text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+              <button onclick="openMaps()" class="w-full mt-4 py-2.5 rounded-2xl bg-sage-600 hover:bg-sage-700 text-white font-medium text-xs flex items-center justify-center gap-2 shadow-sm">
                 <i class="fa-solid fa-map-location-dot"></i> Buka Google Maps Lokasi
               </button>
             </div>
           </div>
         </section>
 
-        <!-- TAB 3: BUKU TAMU / RSVP (REAL-TIME DENGAN SUPABASE) -->
         <section id="tab-rsvpguestbook" class="tab-content scroll-mt-20">
           <div class="text-center mb-8">
             <i class="fa-solid fa-envelope-open-text text-sage-500 text-2xl mb-2"></i>
@@ -327,17 +316,16 @@
             <p class="text-xs text-sage-500 mt-1">Berikan RSVP dan ucapan doa terbaik Anda untuk kedua mempelai.</p>
           </div>
 
-          <!-- RSVP & Guestbook Form -->
           <div class="bg-white rounded-3xl p-6 shadow-md border border-sage-100/50 mb-6">
             <form id="rsvp-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
               <div>
                 <label for="input-name" class="block text-xs font-semibold text-slate-700 mb-1">Nama Lengkap</label>
-                <input type="text" id="input-name" required placeholder="Contoh: Budi Santoso" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition-all">
+                <input type="text" id="input-name" required placeholder="Contoh: Budi Santoso" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sage-400 transition-all">
               </div>
               
               <div>
                 <label for="select-kehadiran" class="block text-xs font-semibold text-slate-700 mb-1">Konfirmasi Kehadiran</label>
-                <select id="select-kehadiran" required class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition-all bg-white">
+                <select id="select-kehadiran" required class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 transition-all bg-white">
                   <option value="" disabled selected>-- Pilih Konfirmasi --</option>
                   <option value="Hadir">Saya Akan Hadir</option>
                   <option value="Tidak Hadir">Maaf, Saya Tidak Bisa Hadir</option>
@@ -347,7 +335,7 @@
 
               <div>
                 <label for="select-pax" class="block text-xs font-semibold text-slate-700 mb-1">Jumlah Tamu (Pax)</label>
-                <select id="select-pax" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition-all bg-white">
+                <select id="select-pax" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 transition-all bg-white">
                   <option value="1">1 Orang</option>
                   <option value="2">2 Orang</option>
                   <option value="3">3 Orang</option>
@@ -361,7 +349,25 @@
                     <i class="fa-solid fa-wand-magic-sparkles"></i> Buat Pesan Otomatis (AI)
                   </button>
                 </div>
-                <textarea id="textarea-wish" required rows="3" placeholder="Tuliskan ucapan selamat..." class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition-all resize-none"></textarea>
+                <textarea id="textarea-wish" required rows="3" placeholder="Tuliskan ucapan selamat..." class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 transition-all resize-none"></textarea>
               </div>
 
-              <button type="submit" id="btn-submit" class="w-full py
+              <button type="submit" id="btn-submit" class="w-full py-3 rounded-2xl bg-sage-600 hover:bg-sage-700 text-white font-bold text-xs transition-colors shadow-md flex items-center justify-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i> Kirim RSVP & Ucapan
+              </button>
+            </form>
+          </div>
+
+          <div class="space-y-4">
+            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-comments text-sage-400"></i> Ucapan Terkini (<span id="count-ucapan">0</span>)
+            </h4>
+            
+            <div id="wishes-list" class="space-y-3 max-h-96 overflow-y-auto no-scrollbar pr-1">
+              <div id="wishes-loading" class="text-center py-6 text-slate-400 text-xs">
+                <i class="fa-solid fa-circle-notch fa-spin text-lg text-sage-500 mb-2"></i>
+                <p>Memuat data ucapan...</p>
+              </div>
+            </div>
+          </div>
+        </section>
