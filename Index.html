@@ -1,0 +1,366 @@
+<!DODOCTYPECTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undangan Pernikahan Ega & Nia</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons for Beautiful UI -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js for Beautiful Analytics & Stats -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            sage: {
+              50: '#f4f7f5',
+              100: '#e5ebe6',
+              200: '#cbdad0',
+              300: '#a3beaf',
+              400: '#759985',
+              500: '#567c69',
+              600: '#436151',
+              700: '#374f42',
+              800: '#2e4036',
+              900: '#27362f',
+            },
+            champagne: {
+              50: '#faf6f0',
+              100: '#f3eade',
+              200: '#e7d5bd',
+              300: '#d7bc96',
+              400: '#c59f71',
+              500: '#b68754',
+              600: '#a77546',
+              700: '#8b5e39',
+              800: '#714d31',
+              900: '#5d402b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f4f7f5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #759985;
+      border-radius: 10px;
+    }
+    /* Simple Animation Keyframes */
+    @keyframes pulse-slow {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .animate-pulse-slow {
+      animation: pulse-slow 3s infinite ease-in-out;
+    }
+    /* Hide scrollbar for element */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-800 font-sans antialiased min-h-screen flex justify-center overflow-x-hidden">
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 w-11/12 max-w-sm pointer-events-none"></div>
+
+  <!-- Music Background Player (Hidden/Floating Control) -->
+  <div id="music-widget" class="fixed bottom-24 right-5 z-40 hidden">
+    <button onclick="toggleMusic()" id="btn-music" class="w-12 h-12 rounded-full bg-sage-600 text-white shadow-lg flex items-center justify-center hover:bg-sage-700 transition-transform active:scale-95 duration-200">
+      <i id="music-icon" class="fa-solid fa-compact-disc fa-spin"></i>
+    </button>
+    <audio id="bg-audio" loop>
+      <!-- Premium Royalty Free Romantic Wedding Instrumental -->
+      <source src="https://assets.mixkit.co/active_storage/sfx/123/123-200.wav" type="audio/wav">
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <!-- Main Mobile Container (Enforces Mobile Viewport Look on Desktop) -->
+  <main class="w-full max-w-md bg-champagne-50 shadow-2xl relative min-h-screen pb-24 overflow-x-hidden flex flex-col">
+
+    <!-- OVERLAY / WELCOME SCREEN -->
+    <section id="welcome-screen" class="fixed inset-0 z-50 bg-gradient-to-b from-sage-900 via-sage-800 to-sage-950 text-white max-w-md mx-auto flex flex-col justify-between p-8 transition-all duration-700">
+      <div class="text-center pt-12">
+        <span class="text-xs tracking-[0.3em] text-champagne-300 uppercase block mb-3 font-semibold">The Wedding of</span>
+        <h1 class="font-serif text-4xl md:text-5xl text-champagne-200 leading-tight">Ega & Nia</h1>
+        <p class="text-xs text-sage-200 tracking-wider mt-2">20 Juni 2026</p>
+      </div>
+
+      <!-- Artistic Frame / Floral Mockup -->
+      <div class="my-auto flex justify-center items-center py-6">
+        <div class="relative w-56 h-56 rounded-full border border-champagne-300/30 flex items-center justify-center p-3 animate-pulse-slow">
+          <div class="w-full h-full rounded-full border-2 border-dashed border-champagne-400/50 flex flex-col justify-center items-center bg-sage-800/40 backdrop-blur-sm">
+            <i class="fa-solid fa-heart text-champagne-400 text-3xl mb-3 animate-bounce"></i>
+            <span class="font-serif text-sm text-champagne-100">Kepada Yth.</span>
+            <span id="guest-name" class="font-bold text-lg text-white mt-1">Tamu Undangan</span>
+            <span class="text-[10px] text-sage-300 italic mt-1">Di Tempat</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center pb-12">
+        <p class="text-xs text-sage-300 mb-6 max-w-xs mx-auto">Merupakan suatu kehormatan dan kebahagiaan bagi kami sekeluarga apabila Bapak/Ibu/Saudara/i berkenan hadir di hari bahagia kami.</p>
+        <button onclick="openUndangan()" class="px-8 py-3.5 rounded-full bg-champagne-400 hover:bg-champagne-500 text-sage-950 font-bold tracking-wider text-sm transition-all shadow-lg shadow-champagne-950/20 active:scale-95 flex items-center gap-3 mx-auto">
+          <i class="fa-solid fa-envelope-open"></i> Buka Undangan
+        </button>
+      </div>
+    </section>
+
+    <!-- CONTENT WRAPPER -->
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000 flex-grow">
+      
+      <!-- HERO SECTION -->
+      <header class="relative bg-gradient-to-b from-sage-900 to-sage-800 text-white py-16 px-6 text-center shadow-lg">
+        <div class="absolute inset-0 bg-[radial-gradient(#567c69_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
+        <span class="text-xs tracking-[0.2em] text-champagne-400 uppercase block mb-3 font-semibold">Walimatul 'Ursy</span>
+        <h2 class="font-serif text-5xl text-champagne-100 mb-2">Ega & Nia</h2>
+        <p class="text-sm text-sage-300 tracking-widest uppercase mb-6">Sabtu, 20 Juni 2026</p>
+        
+        <!-- Countdown Widget -->
+        <div class="grid grid-cols-4 gap-2 max-w-xs mx-auto mt-6">
+          <div class="bg-sage-950/50 backdrop-blur-md rounded-xl p-3 border border-sage-700/50">
+            <span id="days" class="block font-serif text-2xl text-champagne-300 font-bold">00</span>
+            <span class="text-[9px] uppercase tracking-wider text-sage-400">Hari</span>
+          </div>
+          <div class="bg-sage-950/50 backdrop-blur-md rounded-xl p-3 border border-sage-700/50">
+            <span id="hours" class="block font-serif text-2xl text-champagne-300 font-bold">00</span>
+            <span class="text-[9px] uppercase tracking-wider text-sage-400">Jam</span>
+          </div>
+          <div class="bg-sage-950/50 backdrop-blur-md rounded-xl p-3 border border-sage-700/50">
+            <span id="minutes" class="block font-serif text-2xl text-champagne-300 font-bold">00</span>
+            <span class="text-[9px] uppercase tracking-wider text-sage-400">Menit</span>
+          </div>
+          <div class="bg-sage-950/50 backdrop-blur-md rounded-xl p-3 border border-sage-700/50">
+            <span id="seconds" class="block font-serif text-2xl text-champagne-300 font-bold">00</span>
+            <span class="text-[9px] uppercase tracking-wider text-sage-400">Detik</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- TAB SECTIONS CONTAINER -->
+      <div class="px-5 py-8 space-y-12">
+        
+        <!-- TAB 1: MEMPELAI (SAMPUL & PROFIL) -->
+        <section id="tab-mempelai" class="tab-content scroll-mt-20">
+          <div class="text-center mb-8">
+            <i class="fa-solid fa-leaf text-sage-500 text-2xl mb-2"></i>
+            <h3 class="font-serif text-2xl text-sage-800">Kedua Mempelai</h3>
+            <p class="text-xs text-sage-500 italic mt-1">Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan.</p>
+          </div>
+
+          <div class="space-y-6">
+            <!-- Mempelai Pria -->
+            <div class="bg-white rounded-3xl p-6 shadow-md border border-sage-100/50 relative overflow-hidden">
+              <div class="absolute -right-8 -top-8 w-24 h-24 bg-sage-100 rounded-full opacity-50"></div>
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-16 h-16 rounded-full bg-sage-200 flex items-center justify-center text-sage-600 font-serif text-2xl font-bold shadow-inner">
+                  E
+                </div>
+                <div>
+                  <h4 class="font-serif text-xl text-sage-900 font-bold">Ega Lana Wibowo, S.Kom</h4>
+                  <p class="text-xs text-champagne-600 font-semibold uppercase tracking-wider">Ega</p>
+                </div>
+              </div>
+              <p class="text-xs text-slate-500 leading-relaxed pl-1">
+                Putra tercinta dari bapak <strong class="text-slate-800 font-medium">PRAMUJI</strong> & Ibu.
+              </p>
+              <div class="mt-4 pt-3 border-t border-slate-100 flex items-center gap-2 text-[11px] text-slate-500">
+                <i class="fa-solid fa-map-pin text-sage-500"></i>
+                <span>JL. Nyiresik Blok Askal, RT 022/RW 001, Kel. Sindang, Kec. Sindang, Indramayu</span>
+              </div>
+            </div>
+
+            <!-- Heart Divider -->
+            <div class="flex items-center justify-center my-2">
+              <div class="h-[1px] bg-sage-200 flex-grow max-w-[60px]"></div>
+              <i class="fa-solid fa-heart text-champagne-400 mx-3 text-lg"></i>
+              <div class="h-[1px] bg-sage-200 flex-grow max-w-[60px]"></div>
+            </div>
+
+            <!-- Mempelai Wanita -->
+            <div class="bg-white rounded-3xl p-6 shadow-md border border-sage-100/50 relative overflow-hidden">
+              <div class="absolute -left-8 -top-8 w-24 h-24 bg-champagne-100 rounded-full opacity-50"></div>
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-16 h-16 rounded-full bg-champagne-200 flex items-center justify-center text-champagne-700 font-serif text-2xl font-bold shadow-inner">
+                  N
+                </div>
+                <div>
+                  <h4 class="font-serif text-xl text-sage-900 font-bold">Karunia Riski Apri Hesi, S.Tr.Akt</h4>
+                  <p class="text-xs text-champagne-600 font-semibold uppercase tracking-wider">Nia</p>
+                </div>
+              </div>
+              <p class="text-xs text-slate-500 leading-relaxed pl-1">
+                Putri tercinta dari bapak <strong class="text-slate-800 font-medium">SUHERMAN</strong> & Ibu.
+              </p>
+              <div class="mt-4 pt-3 border-t border-slate-100 flex items-center gap-2 text-[11px] text-slate-500">
+                <i class="fa-solid fa-map-pin text-champagne-500"></i>
+                <span>Kp. Jati, RT 002/RW 003, Kel. Jatiuwung, Kec. Cibodas, Tangerang</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 2: ACARA (WAKTU & TEMPAT) -->
+        <section id="tab-acara" class="tab-content scroll-mt-20">
+          <div class="text-center mb-8">
+            <i class="fa-solid fa-calendar-days text-sage-500 text-2xl mb-2"></i>
+            <h3 class="font-serif text-2xl text-sage-800">Rangkaian Acara</h3>
+            <p class="text-xs text-sage-500 mt-1">Kami sangat menantikan kehadiran Anda di hari bahagia kami</p>
+          </div>
+
+          <div class="space-y-6">
+            <!-- Akad Nikah -->
+            <div class="bg-white rounded-3xl p-6 shadow-md border-t-4 border-sage-500">
+              <div class="flex justify-between items-start mb-4">
+                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-[10px] rounded-full font-bold uppercase tracking-wider">Akad Nikah</span>
+                <i class="fa-solid fa-ring text-sage-500 text-lg"></i>
+              </div>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-sage-50 flex items-center justify-center text-sage-600">
+                    <i class="fa-solid fa-clock text-sm"></i>
+                  </div>
+                  <div>
+                    <span class="block text-xs text-slate-400">Waktu</span>
+                    <span class="text-xs font-semibold text-slate-800">08.00 WIB - 10.00 WIB</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-sage-50 flex items-center justify-center text-sage-600">
+                    <i class="fa-solid fa-calendar text-sm"></i>
+                  </div>
+                  <div>
+                    <span class="block text-xs text-slate-400">Hari & Tanggal</span>
+                    <span class="text-xs font-semibold text-slate-800">Sabtu, 20 Juni 2026</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-sage-50 flex items-center justify-center text-sage-600">
+                    <i class="fa-solid fa-location-dot text-sm"></i>
+                  </div>
+                  <div>
+                    <span class="block text-xs text-slate-400">Lokasi Acara</span>
+                    <span class="text-xs font-semibold text-slate-800 block">Kediaman Mempelai Wanita</span>
+                    <span class="text-[10px] text-slate-500">Kp. Jati, Kel. Jatiuwung, Kec. Cibodas, Tangerang</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Resepsi Nikah -->
+            <div class="bg-white rounded-3xl p-6 shadow-md border-t-4 border-champagne-400">
+              <div class="flex justify-between items-start mb-4">
+                <span class="px-3 py-1 bg-champagne-100 text-champagne-800 text-[10px] rounded-full font-bold uppercase tracking-wider">Resepsi Pernikahan</span>
+                <i class="fa-solid fa-champagne-glasses text-champagne-500 text-lg"></i>
+              </div>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-champagne-50 flex items-center justify-center text-champagne-600">
+                    <i class="fa-solid fa-clock text-sm"></i>
+                  </div>
+                  <div>
+                    <span class="block text-xs text-slate-400">Waktu</span>
+                    <span class="text-xs font-semibold text-slate-800">11.00 WIB - Selesai</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-champagne-50 flex items-center justify-center text-champagne-600">
+                    <i class="fa-solid fa-calendar text-sm"></i>
+                  </div>
+                  <div>
+                    <span class="block text-xs text-slate-400">Hari & Tanggal</span>
+                    <span class="text-xs font-semibold text-slate-800">Sabtu, 20 Juni 2026</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-champagne-50 flex items-center justify-center text-champagne-600">
+                    <i class="fa-solid fa-location-dot text-sm"></i>
+                  </div>
+                  <div>
+                    <span class="block text-xs text-slate-400">Lokasi Acara</span>
+                    <span class="text-xs font-semibold text-slate-800 block">Gedung Pertemuan Utama Tangerang</span>
+                    <span class="text-[10px] text-slate-500">Kp. Jati, Kel. Jatiuwung, Kec. Cibodas, Tangerang</span>
+                  </div>
+                </div>
+              </div>
+              <button onclick="openMaps()" class="w-full mt-4 py-2.5 rounded-2xl bg-sage-600 hover:bg-sage-700 text-white font-medium text-xs transition-colors flex items-center justify-center gap-2 shadow-sm">
+                <i class="fa-solid fa-map-location-dot"></i> Buka Google Maps Lokasi
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: BUKU TAMU / RSVP (REAL-TIME DENGAN SUPABASE) -->
+        <section id="tab-rsvpguestbook" class="tab-content scroll-mt-20">
+          <div class="text-center mb-8">
+            <i class="fa-solid fa-envelope-open-text text-sage-500 text-2xl mb-2"></i>
+            <h3 class="font-serif text-2xl text-sage-800">Kehadiran & Buku Tamu</h3>
+            <p class="text-xs text-sage-500 mt-1">Berikan RSVP dan ucapan doa terbaik Anda untuk kedua mempelai.</p>
+          </div>
+
+          <!-- RSVP & Guestbook Form -->
+          <div class="bg-white rounded-3xl p-6 shadow-md border border-sage-100/50 mb-6">
+            <form id="rsvp-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+              <div>
+                <label for="input-name" class="block text-xs font-semibold text-slate-700 mb-1">Nama Lengkap</label>
+                <input type="text" id="input-name" required placeholder="Contoh: Budi Santoso" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition-all">
+              </div>
+              
+              <div>
+                <label for="select-kehadiran" class="block text-xs font-semibold text-slate-700 mb-1">Konfirmasi Kehadiran</label>
+                <select id="select-kehadiran" required class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition-all bg-white">
+                  <option value="" disabled selected>-- Pilih Konfirmasi --</option>
+                  <option value="Hadir">Saya Akan Hadir</option>
+                  <option value="Tidak Hadir">Maaf, Saya Tidak Bisa Hadir</option>
+                  <option value="Masih Ragu">Masih Ragu-ragu</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="select-pax" class="block text-xs font-semibold text-slate-700 mb-1">Jumlah Tamu (Pax)</label>
+                <select id="select-pax" class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition-all bg-white">
+                  <option value="1">1 Orang</option>
+                  <option value="2">2 Orang</option>
+                  <option value="3">3 Orang</option>
+                </select>
+              </div>
+
+              <div>
+                <div class="flex justify-between items-center mb-1">
+                  <label for="textarea-wish" class="block text-xs font-semibold text-slate-700">Pesan & Doa Restu</label>
+                  <button type="button" onclick="openAiGenerator()" class="text-[10px] text-sage-600 font-semibold hover:underline flex items-center gap-1">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Buat Pesan Otomatis (AI)
+                  </button>
+                </div>
+                <textarea id="textarea-wish" required rows="3" placeholder="Tuliskan ucapan selamat..." class="w-full px-4 py-2.5 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition-all resize-none"></textarea>
+     
